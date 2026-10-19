@@ -11,7 +11,8 @@ export class LoginPage extends PaginaBase {
 
   visitar() {
     cy.visit("/login");
-    return cy.get(this.seletores.titulo).should("be.visible").and("have.text", "Login");
+    cy.get(this.seletores.titulo).should("be.visible").and("have.text", "Login");
+    return this.evidenciar("tela de login aberta");
   }
 
   preencherEmail(email: string) {
@@ -33,17 +34,21 @@ export class LoginPage extends PaginaBase {
   }
 
   devePermanecerNaAutenticacao() {
-    return cy.location("pathname").should("eq", "/login");
+    cy.location("pathname").should("eq", "/login");
+    return this.evidenciar("permaneceu na tela de login");
   }
 
   irParaCadastro() {
     this.clicarEm(this.seletores.cadastrar);
-    return cy.location("pathname").should("eq", "/cadastrarusuarios");
+    cy.location("pathname").should("eq", "/cadastrarusuarios");
+    cy.contains("h2", "Cadastro").should("be.visible");
+    return this.evidenciar("link levou ao cadastro");
   }
 
   naoDeveTerSessao() {
-    return cy.window().should((janela) => {
+    cy.window().should((janela) => {
       expect(janela.localStorage.getItem("serverest/userToken"), "token ausente").to.equal(null);
     });
+    return this.evidenciar("nenhuma sessão gravada");
   }
 }

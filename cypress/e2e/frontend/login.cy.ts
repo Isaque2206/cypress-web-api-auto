@@ -36,9 +36,6 @@ describe("Frontend - Login", () => {
       return loginPage.naoDeveTerSessao();
     });
 
-    allure.step("Seguir o link de cadastro", () => {
-      loginPage.irParaCadastro();
-      return cy.contains("h2", "Cadastro").should("be.visible");
-    });
+    allure.step("Seguir o link de cadastro", () => loginPage.irParaCadastro());
   });
 });

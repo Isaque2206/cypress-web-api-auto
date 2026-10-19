@@ -11,16 +11,18 @@ export class HomePage extends PaginaBase {
   deveEstarAutenticada() {
     cy.location("pathname", { timeout: 20000 }).should("eq", "/home");
     cy.contains("h4", "Produtos").should("be.visible");
-    return cy.get(this.seletores.logout).should("be.visible");
+    cy.get(this.seletores.logout).should("be.visible");
+    return this.evidenciar("home autenticada");
   }
 
   deveGuardarSessao(email: string) {
-    return cy.window().should((janela) => {
+    cy.window().should((janela) => {
       expect(janela.localStorage.getItem("serverest/userEmail"), "e-mail da sessão").to.eq(email);
       const token = janela.localStorage.getItem("serverest/userToken") ?? "";
       expect(token.startsWith("Bearer "), "sessão com Bearer token").to.eq(true);
       expect(token.length, "tamanho do token").to.be.greaterThan("Bearer ".length);
     });
+    return this.evidenciar("sessão gravada no navegador");
   }
 
   pesquisarProduto(nome: string) {
@@ -31,7 +33,8 @@ export class HomePage extends PaginaBase {
   }
 
   deveListarProduto(nome: string) {
-    return cy.contains("h5.card-title", nome).should("be.visible");
+    cy.contains("h5.card-title", nome).should("be.visible");
+    return this.evidenciar(`produto listado ${nome}`);
   }
 
   adicionarNaLista(nome: string) {
@@ -42,16 +45,18 @@ export class HomePage extends PaginaBase {
       .should("be.visible")
       .click();
 
-    return cy.location("pathname").should("eq", "/minhaListaDeProdutos");
+    cy.location("pathname").should("eq", "/minhaListaDeProdutos");
+    return this.evidenciar(`produto adicionado ${nome}`);
   }
 
   sair() {
     this.clicarEm(this.seletores.logout);
     cy.location("pathname").should("eq", "/login");
-    return cy.window().should((janela) => {
+    cy.window().should((janela) => {
       expect(janela.localStorage.getItem("serverest/userToken"), "sessão encerrada").to.equal(
         null,
       );
     });
+    return this.evidenciar("sessão encerrada na tela de login");
   }
 }

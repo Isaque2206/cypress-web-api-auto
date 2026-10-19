@@ -12,15 +12,14 @@ export class ListaComprasPage extends PaginaBase {
 
   deveEstarAberta() {
     cy.location("pathname").should("eq", "/minhaListaDeProdutos");
-    return cy.contains("h1", "Lista de Compras").should("be.visible");
+    cy.contains("h1", "Lista de Compras").should("be.visible");
+    return this.evidenciar("lista de compras aberta");
   }
 
   deveConterProduto(nome: string, quantidade: number) {
     cy.get(this.seletores.nome).should("be.visible").and("contain.text", nome);
-    return cy
-      .get(this.seletores.quantidade)
-      .should("be.visible")
-      .and("contain.text", `Total: ${quantidade}`);
+    cy.get(this.seletores.quantidade).should("be.visible").and("contain.text", `Total: ${quantidade}`);
+    return this.evidenciar(`lista com ${nome} quantidade ${quantidade}`);
   }
 
   aumentarQuantidade() {
@@ -32,9 +31,7 @@ export class ListaComprasPage extends PaginaBase {
   }
 
   deveEstarVazia() {
-    return cy
-      .get(this.seletores.vazio)
-      .should("be.visible")
-      .and("have.text", mensagens.carrinhoVazio);
+    cy.get(this.seletores.vazio).should("be.visible").and("have.text", mensagens.carrinhoVazio);
+    return this.evidenciar("lista vazia");
   }
 }

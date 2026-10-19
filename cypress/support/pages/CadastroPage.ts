@@ -14,7 +14,8 @@ export class CadastroPage extends PaginaBase {
 
   visitar() {
     cy.visit("/cadastrarusuarios");
-    return cy.get(this.seletores.titulo).should("be.visible").and("have.text", "Cadastro");
+    cy.get(this.seletores.titulo).should("be.visible").and("have.text", "Cadastro");
+    return this.evidenciar("formulário de cadastro aberto");
   }
 
   preencher(usuario: NovoUsuario) {
