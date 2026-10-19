@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "types": ["cypress", "node"],
+    "lib": ["ES2022", "DOM"]
+  },
+  "include": ["cypress.config.ts", "cypress/**/*.ts", "lib/**/*.ts"]
+}

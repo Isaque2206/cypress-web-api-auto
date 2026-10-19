@@ -1,0 +1,41 @@
+name: Cypress ServeRest
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  automacao:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Executar os cenários Cypress
+        run: npm run test:e2e
+
+      - name: Gerar o relatório Allure
+        if: always()
+        run: npm run allure:generate
+
+      - name: Publicar o relatório Allure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: |
+            allure-report
+            allure-results
+            cypress/screenshots
