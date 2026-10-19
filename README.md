@@ -24,7 +24,7 @@ npm ci
 npm test
 ```
 
-`npm test` roda o Cypress em modo headless e gera `allure-report/`. Para abrir o relatório:
+`npm test` roda o Cypress no Chrome em modo headless e gera `allure-report/`. Para abrir o relatório:
 
 ```bash
 npm run allure:open

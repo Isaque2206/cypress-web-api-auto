@@ -17,9 +17,9 @@ export class HomePage extends PaginaBase {
   deveGuardarSessao(email: string) {
     return cy.window().should((janela) => {
       expect(janela.localStorage.getItem("serverest/userEmail"), "e-mail da sessão").to.eq(email);
-      expect(janela.localStorage.getItem("serverest/userToken"), "token da sessão").to.match(
-        /^Bearer\s.+/,
-      );
+      const token = janela.localStorage.getItem("serverest/userToken") ?? "";
+      expect(token.startsWith("Bearer "), "sessão com Bearer token").to.eq(true);
+      expect(token.length, "tamanho do token").to.be.greaterThan("Bearer ".length);
     });
   }
 

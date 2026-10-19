@@ -5,9 +5,9 @@
   "description": "Automação Cypress do ServeRest com Page Object, contratos da API e relatório Allure.",
   "scripts": {
     "cy:open": "cypress open",
-    "test:frontend": "cypress run --browser electron --spec \"cypress/e2e/frontend/**/*.cy.ts\"",
-    "test:api": "cypress run --browser electron --spec \"cypress/e2e/api/**/*.cy.ts\"",
-    "test:e2e": "cypress run --browser electron",
+    "test:frontend": "cypress run --browser chrome --spec \"cypress/e2e/frontend/**/*.cy.ts\"",
+    "test:api": "cypress run --browser chrome --spec \"cypress/e2e/api/**/*.cy.ts\"",
+    "test:e2e": "cypress run --browser chrome",
     "allure:generate": "allure generate allure-results --clean -o allure-report",
     "allure:open": "allure open allure-report",
     "test": "npm run test:e2e && npm run allure:generate",
